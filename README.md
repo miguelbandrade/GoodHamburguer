@@ -1,6 +1,6 @@
 # GoodHamburguer API 🍔
 
-API para gerenciamento de pedidos de uma hamburgueria, desenvolvida com foco em Clean Architecture e boas práticas de desenvolvimento .NET.
+API para gerenciamento de pedidos de uma hamburgueria, desenvolvida com foco em Clean Architecture, Domain-Driven Design (DDD) e alta testabilidade.
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -8,17 +8,28 @@ API para gerenciamento de pedidos de uma hamburgueria, desenvolvida com foco em 
 - **Entity Framework Core 9**
 - **MySQL** (Pomelo Entity Framework Core MySql)
 - **Swagger / OpenAPI** para documentação
+- **xUnit** para testes unitários
+- **Moq** para simulação de dependências
+- **Bogus** para geração de dados aleatórios (Data Generation)
+- **FluentAssertions** para validações de testes legíveis
 
 ## 🏛️ Arquitetura e Decisões
 
-O projeto foi estruturado seguindo os princípios da **Clean Architecture**, dividido nas seguintes camadas:
+O projeto segue os princípios da **Clean Architecture**, garantindo desacoplamento e facilidade de manutenção:
 
-1.  **Domain**: Contém as entidades de negócio (`Order`, `Product`, `OrderProduct`), interfaces de repositório e o padrão Unit of Work. É a camada central e não possui dependências externas.
-2.  **Application**: Implementa os casos de uso (`UseCases`) da aplicação. Aqui reside a lógica de negócio, orquestrando a comunicação entre o domínio e a infraestrutura.
-3.  **Infrastructure**: Responsável pelo acesso a dados, configuração do Entity Framework Core, migrações e implementação dos repositórios.
-4.  **Communication**: Define os contratos de entrada (`Requests`) e saída (`Responses`) da API, garantindo o desacoplamento das entidades de domínio.
-5.  **SharedKernel**: Contém recursos compartilhados por todas as camadas, como Enums e Exceções personalizadas.
-6.  **API**: Ponto de entrada da aplicação, contendo os Controllers e Middlewares.
+1.  **Domain**: O coração da aplicação. Contém as entidades (`Order`, `Product`), Enums e interfaces de repositório.
+2.  **Application**: Implementa a lógica de negócio através de **Use Cases**. Orquestra a persistência e validações.
+3.  **Infrastructure**: Implementa o acesso a dados, configurações do EF Core (Fluent API) e o padrão **Unit of Work**.
+4.  **Communication**: Contratos de entrada e saída (DTOs) da API.
+5.  **SharedKernel**: Recursos compartilhados como exceções personalizadas e helpers.
+6.  **CommonTestUtilities**: Projeto auxiliar com **Builders** fluentes e utilitários para facilitar a criação de testes.
+7.  **Tests (UseCases.Tests)**: Cobertura de testes unitários para toda a lógica de negócio dos pedidos.
+
+### Decisões Técnicas:
+- **Migrations Automáticas**: O banco de dados é criado e atualizado automaticamente ao iniciar a API, eliminando a necessidade de comandos manuais no primeiro uso.
+- **Data Seeding**: Produtos iniciais (X Burger, Batata, etc.) são inseridos automaticamente via Migration.
+- **Fluent Builders**: Implementação de Builders com **Bogus** para garantir que os testes sejam resilientes a mudanças nas entidades.
+- **Middleware de Exceção**: Tratamento global que converte exceções de negócio (`NotFound`, `BadRequest`) em status codes HTTP apropriados.
 
 ## 🛠️ Como Executar
 
@@ -27,33 +38,33 @@ O projeto foi estruturado seguindo os princípios da **Clean Architecture**, div
 - Servidor MySQL
 
 ### Configuração
-1.  Clone o repositório.
-2.  Crie um arquivo `src/GoodHamburguer.API/appsettings.json` e ajuste a connection string `Default` com suas credenciais do MySQL:
+1.  No arquivo `src/GoodHamburguer.API/appsettings.json`, ajuste a connection string `Default`:
     ```json
-    {
-        "Logging": {
-            "LogLevel": {
-            "Default": "Information",
-            "Microsoft.AspNetCore": "Warning"
-            }
-        },
-        "AllowedHosts": "*",
-        "ConnectionStrings": {
-            "Default": "Sua Connection String"
-        }
+    "ConnectionStrings": {
+      "Default": "server=localhost;database=goodhamburguer;user=root;password=SUA_SENHA"
     }
     ```
 
-### Execução via CLI
+### Execução da API
 1.  Navegue até a raiz do projeto.
-2.  Restaure as dependências:
-    ```bash
-    dotnet restore
-    ```
-3.  Execute a aplicação:
+2.  Execute:
     ```bash
     dotnet run --project src/GoodHamburguer.API
     ```
-4.  Acesse o Swagger em: `https://localhost:7025/swagger` (ou a porta indicada no console).
+    *O banco será criado e populado automaticamente no primeiro acesso.*
 
-Desenvolvido como parte de um desafio técnico para gerenciamento de pedidos.
+### Execução dos Testes
+1.  Para rodar todos os testes unitários:
+    ```bash
+    dotnet test
+    ```
+
+## 📝 O que ficou de fora (Próximos Passos)
+
+- **Dockerização**: Containerização da API e do MySQL via `docker-compose`.
+- **Autenticação**: Proteção dos endpoints com JWT.
+- **Testes de Integração**: Testes que validam a persistência real no banco de dados.
+- **Logging Estruturado**: Implementação de Serilog para rastreabilidade em produção.
+
+---
+Desenvolvido com foco em qualidade de código e padrões modernos de desenvolvimento .NET.
