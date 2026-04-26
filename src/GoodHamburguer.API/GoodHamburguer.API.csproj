@@ -8,6 +8,18 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="10.1.7" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="10.1.7" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.1.7" />
+    <!-- EF design package required for dotnet-ef when API is the startup project -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GoodHamburguer.Application\GoodHamburguer.Application.csproj" />
+    <ProjectReference Include="..\GoodHamburguer.Communication\GoodHamburguer.Communication.csproj" />
+    <ProjectReference Include="..\GoodHamburguer.Infrastructure\GoodHamburguer.Infrastructure.csproj" />
+    <ProjectReference Include="..\GoodHamburguer.SharedKernel\GoodHamburguer.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>
