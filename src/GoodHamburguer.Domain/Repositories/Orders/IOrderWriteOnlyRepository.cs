@@ -6,5 +6,6 @@ namespace GoodHamburguer.Domain.Repositories.Orders
     {
         Task Add(Order order);
         Task<Order?> GetById(int id);
+        void Delete(Order order);
     }
 }

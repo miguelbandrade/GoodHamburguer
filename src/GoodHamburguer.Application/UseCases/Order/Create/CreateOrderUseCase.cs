@@ -8,7 +8,7 @@ using GoodHamburguer.Domain.Repositories.Products;
 using GoodHamburguer.SharedKernel.Enum.Product;
 using GoodHamburguer.SharedKernel.Exceptions;
 
-namespace GoodHamburguer.Application.UseCases
+namespace GoodHamburguer.Application.UseCases.Order.Create
 {
     public class CreateOrderUseCase(
         IProductReadOnlyRepository productReadOnlyRepository,
@@ -25,7 +25,7 @@ namespace GoodHamburguer.Application.UseCases
             var hasDuplicateTypes = products
                 .GroupBy(p => p.Type)
                 .Any(g => g.Count() > 1);
-
+             
             if (hasDuplicateTypes)
                 throw new BadRequestException("Só é possível comprar um produto de cada tipo por pedido.");
 

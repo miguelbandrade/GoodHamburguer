@@ -11,6 +11,11 @@ namespace GoodHamburguer.Infrastructure.Data.Repositories
             await db.AddAsync(order);
         }
 
+        public void Delete(Order order)
+        {
+            db.Remove(order);
+        }
+
         public async Task<List<Order>> GetAll()
         {
             return await db.Orders
@@ -31,7 +36,10 @@ namespace GoodHamburguer.Infrastructure.Data.Repositories
             return await db.Orders
                 .AsNoTracking()
                 .Include(x => x.OrderProducts)
+                .ThenInclude(e => e.Product)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
+
+
     }
 }
