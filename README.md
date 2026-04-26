@@ -59,12 +59,5 @@ O projeto segue os princípios da **Clean Architecture**, garantindo desacoplame
     dotnet test
     ```
 
-## 📝 O que ficou de fora (Próximos Passos)
-
-- **Dockerização**: Containerização da API e do MySQL via `docker-compose`.
-- **Autenticação**: Proteção dos endpoints com JWT.
-- **Testes de Integração**: Testes que validam a persistência real no banco de dados.
-- **Logging Estruturado**: Implementação de Serilog para rastreabilidade em produção.
-
 ---
 Desenvolvido com foco em qualidade de código e padrões modernos de desenvolvimento .NET.
