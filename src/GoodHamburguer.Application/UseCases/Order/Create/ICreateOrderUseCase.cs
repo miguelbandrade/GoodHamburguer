@@ -5,6 +5,6 @@ namespace GoodHamburguer.Application.UseCases.Order.Create
 {
     public interface ICreateOrderUseCase
     {
-        Task<ResponseCreated> Execute(RequestCreateOrder request);
+        Task<ResponseCreated> Execute(RequestOrder request);
     }
 }

@@ -19,7 +19,6 @@ namespace GoodHamburguer.Infrastructure.Data.Repositories
         public async Task<List<Order>> GetAll()
         {
             return await db.Orders
-                .Include(x => x.OrderProducts)
                 .AsNoTracking()
                 .ToListAsync();
         }

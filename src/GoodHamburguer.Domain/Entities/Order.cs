@@ -1,4 +1,6 @@
-﻿namespace GoodHamburguer.Domain.Entities
+﻿using GoodHamburguer.SharedKernel.Enum.Product;
+
+namespace GoodHamburguer.Domain.Entities
 {
     public class Order
     {

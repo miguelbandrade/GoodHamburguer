@@ -7,7 +7,7 @@ namespace GoodHamburguer.Application.Mappings
 {
     public static class OrderMapping
     {
-        public static Order ToEntity(this RequestCreateOrder request, double totalPrice)
+        public static Order ToEntity(this RequestOrder request, double totalPrice)
         {
             return new Order
             {
@@ -31,6 +31,20 @@ namespace GoodHamburguer.Application.Mappings
                 TotalPrice = entity.TotalPrice.ToString("C2", new CultureInfo("pt-BR")),
                 Products = products!.ToResponse()
             };
+        }
+
+        public static ResponseShortOrder ToShortResponse(this Order entity)
+        {
+            return new ResponseShortOrder
+            {
+                Id = entity.Id,
+                CostumerName = entity.CostumerName,
+            };
+        }
+
+        public static List<ResponseShortOrder> ToShortResponse(this List<Order> entities)
+        {
+            return [.. entities.Select(e => e.ToShortResponse())];
         }
     }
 }

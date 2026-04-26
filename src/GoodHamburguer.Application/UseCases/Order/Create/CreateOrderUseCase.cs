@@ -15,7 +15,7 @@ namespace GoodHamburguer.Application.UseCases.Order.Create
         IOrderWriteOnlyRepository orderWriteOnlyRepository,
         IUnitOfWork unitOfWork) : ICreateOrderUseCase
     {
-        public async Task<ResponseCreated> Execute(RequestCreateOrder request)
+        public async Task<ResponseCreated> Execute(RequestOrder request)
         {
             var products = await productReadOnlyRepository.GetListByListId(request.ProductIds);
 
@@ -29,7 +29,7 @@ namespace GoodHamburguer.Application.UseCases.Order.Create
             if (hasDuplicateTypes)
                 throw new BadRequestException("Só é possível comprar um produto de cada tipo por pedido.");
 
-            var entity = request.ToEntity(GetTotalPrice(products));
+            var entity = request.ToEntity(PriceHelper.GetTotalPrice(products));
 
             entity.OrderProducts.AddRange(request.ProductIds.Select(e => new OrderProduct 
             {
@@ -41,25 +41,5 @@ namespace GoodHamburguer.Application.UseCases.Order.Create
 
             return new ResponseCreated { Id = entity.Id };
         }
-
-        private double GetTotalPrice(List<Product> products)
-        {
-            var totalWithoutDescount = products.Sum(e => e.Price);
-
-            if (products.Any(e => e.Type == ProductType.Hamburguer)
-                && products.Any(e => e.Type == ProductType.Drink
-                && products.Any(e => e.Type == ProductType.Fries)))
-                return totalWithoutDescount - (totalWithoutDescount * 0.20);
-
-            if (products.Any(e => e.Type == ProductType.Hamburguer)
-                && products.Any(e => e.Type == ProductType.Fries))
-                return totalWithoutDescount - (totalWithoutDescount * 0.10);
-
-            if (products.Any(e => e.Type == ProductType.Hamburguer)
-                && products.Any(e => e.Type == ProductType.Drink))
-                return totalWithoutDescount - (totalWithoutDescount * 0.15);
-
-            return totalWithoutDescount;
-        }   
     }
 }
