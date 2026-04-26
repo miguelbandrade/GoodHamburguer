@@ -6,6 +6,7 @@ using GoodHamburguer.Domain.Repositories;
 using GoodHamburguer.Domain.Repositories.Orders;
 using GoodHamburguer.Domain.Repositories.Products;
 using GoodHamburguer.SharedKernel.Enum.Product;
+using GoodHamburguer.SharedKernel.Exceptions;
 
 namespace GoodHamburguer.Application.UseCases
 {
@@ -19,14 +20,14 @@ namespace GoodHamburguer.Application.UseCases
             var products = await productReadOnlyRepository.GetListByListId(request.ProductIds);
 
             if (!products.Any())
-                throw new Exception("Nenhum produto válido foi encontrado");
+                throw new NotFoundException("Nenhum produto válido foi encontrado");
 
             var hasDuplicateTypes = products
                 .GroupBy(p => p.Type)
                 .Any(g => g.Count() > 1);
 
             if (hasDuplicateTypes)
-                throw new Exception("Só é possível comprar um produto de cada tipo por pedido.");
+                throw new BadRequestException("Só é possível comprar um produto de cada tipo por pedido.");
 
             var entity = request.ToEntity(GetTotalPrice(products));
 
