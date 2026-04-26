@@ -8,7 +8,7 @@
     <Project Path="src/GoodHamburguer.SharedKernel/GoodHamburguer.SharedKernel.csproj" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="CommonTestUtilities/CommonTestUtilities.csproj" Id="99c2a421-9f83-4604-aa1d-5152460cb627" />
+    <Project Path="tests/CommonTestUtilities/CommonTestUtilities.csproj" />
     <Project Path="tests/UseCases.Tests/UseCases.Tests.csproj" Id="d352276e-266d-448f-a5e1-339aae5a22c8" />
   </Folder>
 </Solution>
