@@ -17,5 +17,13 @@ public class OrderProductMapping : IEntityTypeConfiguration<OrderProduct>
 
         builder.Property(x => x.OrderId)
             .IsRequired();
+
+        builder.HasOne(e => e.Order)
+            .WithMany(e => e.OrderProducts)
+            .HasForeignKey(e => e.OrderId);
+
+        builder.HasOne(e => e.Product)
+            .WithMany(e => e.OrderProducts)
+            .HasForeignKey(e => e.ProductId);
     }
 }

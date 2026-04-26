@@ -15,7 +15,7 @@ namespace GoodHamburguer.API.Controllers
         {
             var response = await useCase.Execute(request);
 
-        return Created();
+            return Created("", response);
         }
     }
 }

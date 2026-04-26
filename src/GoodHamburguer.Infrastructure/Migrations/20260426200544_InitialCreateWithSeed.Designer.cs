@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoodHamburguer.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260426184128_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260426200544_InitialCreateWithSeed")]
+    partial class InitialCreateWithSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,8 +40,8 @@ namespace GoodHamburguer.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<float>("TotalPrice")
-                        .HasColumnType("float");
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("double");
 
                     b.HasKey("Id");
 
@@ -64,6 +64,10 @@ namespace GoodHamburguer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
                     b.ToTable("OrderProducts", (string)null);
                 });
 
@@ -79,8 +83,8 @@ namespace GoodHamburguer.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("float");
+                    b.Property<double>("Price")
+                        .HasColumnType("double");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -88,6 +92,72 @@ namespace GoodHamburguer.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "X Burger",
+                            Price = 5.0,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "X Egg",
+                            Price = 4.5,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "X Bacon",
+                            Price = 7.0,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Batata frita",
+                            Price = 2.0,
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Refrigerante",
+                            Price = 2.5,
+                            Type = 3
+                        });
+                });
+
+            modelBuilder.Entity("GoodHamburguer.Domain.Entities.OrderProduct", b =>
+                {
+                    b.HasOne("GoodHamburguer.Domain.Entities.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GoodHamburguer.Domain.Entities.Product", "Product")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("GoodHamburguer.Domain.Entities.Order", b =>
+                {
+                    b.Navigation("OrderProducts");
+                });
+
+            modelBuilder.Entity("GoodHamburguer.Domain.Entities.Product", b =>
+                {
+                    b.Navigation("OrderProducts");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,7 +6,8 @@ namespace GoodHamburguer.Domain.Entities
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-        public required float Price { get; set; }
+        public required double Price { get; set; }
         public required ProductType Type { get; set; }
+        public List<OrderProduct> OrderProducts { get; set; } = [];
     }
 }

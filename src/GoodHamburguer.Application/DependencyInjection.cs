@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GoodHamburguer.Application
 {
-    public static class DependencyInjectionExtension
+    public static class DependencyInjection
     {
         public static void AddApplication(this IServiceCollection services)
         {
