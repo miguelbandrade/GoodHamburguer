@@ -26,18 +26,31 @@ O projeto segue os princípios da **Clean Architecture**, garantindo desacoplame
 7.  **Tests (UseCases.Tests)**: Cobertura de testes unitários para toda a lógica de negócio dos pedidos.
 
 ### Decisões Técnicas:
+
 - **Migrations Automáticas**: O banco de dados é criado e atualizado automaticamente ao iniciar a API, eliminando a necessidade de comandos manuais no primeiro uso.
 - **Data Seeding**: Produtos iniciais (X Burger, Batata, etc.) são inseridos automaticamente via Migration.
 - **Fluent Builders**: Implementação de Builders com **Bogus** para garantir que os testes sejam resilientes a mudanças nas entidades.
 - **Middleware de Exceção**: Tratamento global que converte exceções de negócio (`NotFound`, `BadRequest`) em status codes HTTP apropriados.
 
+### ⚠️ O que ficou de fora:
+
+Por ser um projeto focado na demonstração de Clean Architecture e DDD, alguns pontos não foram adicionados ao projeto:
+
+- **Autenticação e Autorização**: Não há controle de usuários ou proteção de rotas (JWT/OAuth2).
+- **Docker**: O projeto não inclui `Dockerfile` ou `docker-compose.yml`.
+- **Validação de Input**: Validações básicas feitas manualmente, sem o uso de FluentValidation.
+- **Testes de Integração**: Foco total em testes unitários para os Use Cases.
+- **Observabilidade**: Ausência de logs estruturados e Health Checks.
+
 ## 🛠️ Como Executar
 
 ### Pré-requisitos
+
 - .NET 10 SDK
 - Servidor MySQL
 
 ### Configuração
+
 1.  No arquivo `src/GoodHamburguer.API/appsettings.json`, ajuste a connection string `Default`:
     ```json
     "ConnectionStrings": {
@@ -46,18 +59,21 @@ O projeto segue os princípios da **Clean Architecture**, garantindo desacoplame
     ```
 
 ### Execução da API
+
 1.  Navegue até a raiz do projeto.
 2.  Execute:
     ```bash
     dotnet run --project src/GoodHamburguer.API
     ```
-    *O banco será criado e populado automaticamente no primeiro acesso.*
+    _O banco será criado e populado automaticamente no primeiro acesso._
 
 ### Execução dos Testes
+
 1.  Para rodar todos os testes unitários:
     ```bash
     dotnet test
     ```
 
 ---
+
 Desenvolvido com foco em qualidade de código e padrões modernos de desenvolvimento .NET.
