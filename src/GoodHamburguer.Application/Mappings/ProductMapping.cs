@@ -10,6 +10,7 @@ namespace GoodHamburguer.Application.Mappings
         {
             return new ResponseProduct
             {
+                Id = entity.Id,
                 Description = entity.Name,
                 Price = entity.Price.ToString("C2", new CultureInfo("pt-BR")),
                 Type = entity.Type.ToString()

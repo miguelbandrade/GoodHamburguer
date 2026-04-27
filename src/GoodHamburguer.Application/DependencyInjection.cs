@@ -3,6 +3,7 @@ using GoodHamburguer.Application.UseCases.Order.Delete;
 using GoodHamburguer.Application.UseCases.Order.Get;
 using GoodHamburguer.Application.UseCases.Order.GetAll;
 using GoodHamburguer.Application.UseCases.Order.Update;
+using GoodHamburguer.Application.UseCases.Product.GetAll;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GoodHamburguer.Application
@@ -16,6 +17,8 @@ namespace GoodHamburguer.Application
             services.AddScoped<IGetAllOrderUseCase, GetAllOrderUseCase>();
             services.AddScoped<IGetOrderUseCase, GetOrderUseCase>();
             services.AddScoped<IUpdateOrderUseCase, UpdateOrderUseCase>();
+            
+            services.AddScoped<IGetAllProductUseCase, GetAllProductUseCase>();
         }
     }
 }

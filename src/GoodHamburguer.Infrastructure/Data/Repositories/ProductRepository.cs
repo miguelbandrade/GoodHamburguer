@@ -13,5 +13,12 @@ namespace GoodHamburguer.Infrastructure.Data.Repositories
                 .Where(e => ids.Contains(e.Id))
                 .ToListAsync();
         }
+
+        public async Task<List<Product>> GetAll()
+        {
+            return await db.Products
+                .AsNoTracking()
+                .ToListAsync();
+        }
     }
 }

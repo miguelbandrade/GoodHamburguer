@@ -5,7 +5,7 @@ namespace GoodHamburguer.Application.UseCases.Order
 {
     public static class PriceHelper
     {
-        public static double GetTotalPrice(List<Product> products)
+        public static double GetTotalPrice(List<Domain.Entities.Product> products)
         {
             var totalWithoutDescount = products.Sum(e => e.Price);
 
