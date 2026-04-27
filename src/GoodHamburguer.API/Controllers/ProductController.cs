@@ -13,7 +13,7 @@ namespace GoodHamburguer.API.Controllers
         /// <param name="useCase">Listagem do Cardápio.</param>
         /// <returns>Lista de produtos.</returns>
         /// <response code="200">Lista retornada com sucesso.</response>
-        /// <response code="204">Nenhum pedido encontrado.</response>
+        /// <response code="204">Nenhum produto encontrado.</response>
         [HttpGet]
         public async Task<IActionResult> GetAll(
             [FromServices] IGetAllProductUseCase useCase) 
